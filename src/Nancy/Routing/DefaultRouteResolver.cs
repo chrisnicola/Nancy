@@ -56,6 +56,12 @@
                 return new ResolveResult(new MethodNotAllowedRoute(context.Request.Uri, context.Request.Method), DynamicDictionary.Empty, null, null);
             }
 
+            var exactMatch = GetRouteMatchesWithExactPathMatch(routesWithCorrectRequestMethod).FirstOrDefault();
+            if (exactMatch != null)
+            {
+                return this.CreateRouteAndParametersFromMatch(context, exactMatch);
+            }
+
             var routeMatchesWithMostParameterCaptures = 
                 GetRouteMatchesWithMostParameterCaptures(routesWithCorrectRequestMethod);
 
@@ -86,6 +92,12 @@
         private static RouteCandidate GetSingleRouteToReturn(IEnumerable<RouteCandidate> routesWithMostParameterCaptures)
         {
             return routesWithMostParameterCaptures.First();
+        }
+
+        private static IEnumerable<RouteCandidate> GetRouteMatchesWithExactPathMatch(IEnumerable<RouteCandidate> routesWithCorrectRequestMethod)
+        {
+            return routesWithCorrectRequestMethod.Where(
+                x => x.Item4.Parameters.GetDynamicMemberNames().Count() == 0);
         }
 
         private static IEnumerable<RouteCandidate> GetRouteMatchesWithMostParameterCaptures(IEnumerable<RouteCandidate> routesWithCorrectRequestMethod)
