@@ -110,6 +110,7 @@
     <Compile Include="DynamicDictionaryValue.cs" />
     <Compile Include="ErrorHandling\DefaultErrorHandler.cs" />
     <Compile Include="ErrorHandling\IErrorHandler.cs" />
+    <Compile Include="ErrorPipeline.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Bootstrapper\DefaultModuleKeyGenerator.cs" />
     <Compile Include="Bootstrapper\IModuleKeyGenerator.cs" />
